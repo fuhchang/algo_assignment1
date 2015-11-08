@@ -10,7 +10,7 @@ public class Main {
 	static ArrayList <Vertex> vertexArray = new ArrayList<Vertex>();;
 	static ArrayList<Integer> VisitedList = new ArrayList<Integer>();
 	public static void main(String[] args) throws IOException {
-		ArrayList<Integer> unvisited = new ArrayList<Integer>();
+		//ArrayList<Integer> unvisited = new ArrayList<Integer>();
 		int size =0;
 
 		ArrayList <String> strArray = new ArrayList();
@@ -35,7 +35,7 @@ public class Main {
 		for(int i=0;i<strArray.size();i++){
 			String[] strValue = strArray.get(i).split(" ");
 			Vertex vertex = null;
-			unvisited.add(i);
+			//unvisited.add(i);
 			vertex = new Vertex(i);
 			for(int a=0;a<strValue.length;a++){
 				if(Integer.parseInt(strValue[a]) != 0){
@@ -45,13 +45,6 @@ public class Main {
 			vertexArray.add(vertex);
 		}
 		reader.close();
-	
-		// create graph here
-		for(int i=0; i<unvisited.size();i++){
-			if(unvisited.get(i) == firstLineIndex || unvisited.get(i)== lastLineIndex){
-				unvisited.remove(i);
-			}
-		}
 		for(int i=0;i<vertexArray.size();i++){
 			vertexArray.get(i).setAdjList(sortvalueNsortindex(vertexArray.get(i).getAdjList()));
 		}
@@ -110,11 +103,10 @@ public class Main {
 		int currentIndex =0;
 		int finalDist =0;
 		for(int a=0;a<list.size();a++){
-			//System.out.println(tempVisited.get(a));
-			//System.out.println("visited " + tempVisited.get(a));
-			//System.out.println("size " + vertexArray.get(tempVisited.get(a)).getAdjList().size());
+			//System.out.println(list.get(a));
 			if(list.get(a) == firstLineIndex){
 				path = Integer.toString(list.get(a));
+				tempPath =0;
 				currentIndex = list.get(a);
 				continue;
 			}
@@ -133,10 +125,6 @@ public class Main {
 							finalDist = tempPath;
 							finalPath = path;
 						}
-						
-						path = null;
-						tempPath =0;
-						currentIndex =0;
 						continue;
 					}
 				}
@@ -145,10 +133,10 @@ public class Main {
 				for(int i=0;i<vertexArray.get(currentIndex).getAdjList().size();i++){
 					if(vertexArray.get(currentIndex).getAdjList().get(i).getVertexNumber() == list.get(a)){
 						path = path + " " + vertexArray.get(currentIndex).getAdjList().get(i).getVertexNumber();
-						//System.out.println("path " +path);
+						//System.out.println("path 2 " +path);
 						//System.out.println("before dist " +tempPath);
 						tempPath = tempPath + vertexArray.get(currentIndex).getAdjList().get(i).getVertexValue();
-						//System.out.println("dist " +tempPath);
+						//System.out.println("dist 2 " +tempPath);
 						currentIndex = vertexArray.get(currentIndex).getAdjList().get(i).getVertexNumber();
 						continue;
 					}
@@ -156,7 +144,8 @@ public class Main {
 			}
 			//System.out.println("out come " + finalPath+" " + finalDist);
 		}
-		System.out.println("shortest path " + finalPath+ " Shortest Dist " + finalDist);
+		System.out.println("shortest path " + finalPath);
+		System.out.println("Shortest Dist " + finalDist);
 		// end timer and print total time
 		long end = System.currentTimeMillis();
 		System.out.println("\nElapsed time: " + (end - start) + " milliseconds");
